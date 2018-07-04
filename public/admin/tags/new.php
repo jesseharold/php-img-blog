@@ -55,7 +55,7 @@ if (is_post_request()){
         </dd>
       </dl>
       <div id="operations">
-        <input type="submit" value="Create Tag" />
+        <input type="submit" class="action" value="Create Tag" />
       </div>
     </form>
 

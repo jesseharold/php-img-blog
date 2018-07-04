@@ -1,15 +1,17 @@
-<?php require_once('../../../private/initialize.php'); 
-$id = isset($_GET['id']) ? $_GET['id'] : 'none';
-if ($id == "redirect"){
-    redirect_to('/index.php');
-}
+<?php require_once('../../../private/initialize.php'); ?>
 
-?>
 <?php $page_title = "View Tag" ?>
 <?php require_once(SHARED_PATH . '/admin_header.php'); ?>
 
-<?php $tag = get_tag_by_id($id); ?>
-
+<?php 
+    if (isset($_GET['id'])){
+        $id = $_GET['id'];
+    } else {
+        redirect_to('index.php');
+    }
+    
+    $tag = get_tag_by_id($id); 
+?>
 
 <?php echo show_flash($_GET, 'msg'); ?>
 

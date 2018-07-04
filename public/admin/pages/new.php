@@ -48,7 +48,7 @@ if (is_post_request()){
       <dl>
         <dt>Content</dt>
         <dd>
-          <textarea name="content"></textarea>
+          <textarea name="content" cols="100" rows="25"></textarea>
         </dd>
       </dl>
       <dl>
@@ -71,7 +71,7 @@ if (is_post_request()){
         <dd><input type="text" name="tag_ids" value="" /></dd>
       </dl>
       <div id="operations">
-        <input type="submit" value="Create Page" />
+        <input type="submit" class="action" value="Create Page" />
       </div>
     </form>
 

@@ -3,22 +3,26 @@
 <?php require_once(SHARED_PATH . '/admin_header.php'); ?>
 
 <?php
-$id = isset($_GET['id']) ? $_GET['id'] : 'none';
+    if (isset($_GET['id'])){
+        $id = $_GET['id'];
+    } else {
+        redirect_to('index.php');
+    }
+    
+    $page = get_page_by_id($id);
 ?>
 
-    <?php $page = get_page_by_id($id);?>
-
-    <?php echo show_flash($_GET, 'msg'); ?>
+<?php echo show_flash($_GET, 'msg'); ?>
 
     <dl>
         <dt>ID</dt>
         <dd><?php echo h($page['id']); ?></dd>
         <dt>Title</dt>
-        <dd><?php echo h(unquotes($page['title'])); ?></dd>
+        <dd><?php echo h($page['title']); ?></dd>
         <dt>Visible</dt>
         <dd><?php echo $page['visible'] == 1 ? 'true' : 'false'; ?></dd>
         <dt>Content</dt>
-        <dd><?php echo h(unquotes($page['content'])); ?></dd>
+        <dd><?php echo h($page['content']); ?></dd>
         <dt>Image</dt>
         <dd><?php echo h($page['img_path']); ?></dd>
         <dt>Tags</dt>
