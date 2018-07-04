@@ -2,8 +2,10 @@
   </section>
 
   <footer class="container">
-    Copyright &copy; <?php echo date('Y'); ?>
+    Copyright Jesse Harold and iknowthings.org &copy; <?php echo date('Y'); ?>
   </footer>
 
 </body>
 </html>
+
+<?php db_disconnect($db); ?>
