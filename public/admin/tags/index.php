@@ -4,6 +4,9 @@
 
 
 <?php
+
+  $result_set = get_all_tags();
+  
   // dummy data until db is set up
   $tags = [
     ['id' => '1', 'position' => '1', 'visible' => '1', 'menu_name' => 'About Globe Bank'],
@@ -44,5 +47,10 @@
   	</table>
 
   </div>
+
+<?php 
+  // free up memory used by this query
+  mysqli_free_result($result_set);
+?>
 
 <?php include_once(SHARED_PATH . '/admin_footer.php'); ?>
