@@ -8,6 +8,12 @@
         $query = "SELECT * FROM tags ";
         $query .= "ORDER BY position ASC";
         $result = mysqli_query($db, $query);
+
+        // Test if query succeeded
+        if (!$result) {
+            exit("Database query failed: " . $query);
+        }
+
         return $result;
     }
 
