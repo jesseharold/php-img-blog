@@ -27,4 +27,27 @@
     function is_get_request() {
         return $_SERVER['REQUEST_METHOD'] == 'GET';
     }
+
+    function show_flash($query_string, $key){
+        // show flash messaging
+        $val = isset($query_string[$key]) ? $query_string[$key] : false;
+        if (!$val){
+            return false;
+        } else {
+            $flash = '<div class="flash">' . $val . '</div>';
+            return $flash;
+        }
+    }
+
+    function quotes($str){
+        $clean = str_replace("'", "&apos;", $str);
+        $clean = str_replace('"', "&quot;", $clean);
+        return $clean;
+    }
+
+    function unquotes($str){
+        $quoted = str_replace("&apos;", "'", $str);
+        $clean = str_replace("&quot;", '"', $quoted);
+        return $quoted;
+    }
 ?>

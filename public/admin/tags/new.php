@@ -3,25 +3,41 @@
 <?php require_once(SHARED_PATH . '/admin_header.php'); ?>
 
 <?php
-$id = isset($_GET['id']) ? $_GET['id'] : 'none';
 
 // Handle form values sent by new.php
 if (is_post_request()){
-  $menu_name = $_POST['menu_name'] ? $_POST['menu_name'] : '';
+  $display_name = $_POST['display_name'] ? $_POST['display_name'] : '';
   $position = $_POST['position'] ? $_POST['position'] : '';
   $visible = $_POST['visible'] ? $_POST['visible']: '';
+  
+  if ($visible == ''){
+    $visible = 0;
+  }
 
-  echo "<h4>Tag Created</h4>";
-  echo "Menu name: " . $menu_name . "<br />";
-  echo "Position: " . $position . "<br />";
-  echo "Visible: " . $visible . "<br />";
+  $sql = "INSERT INTO tags (display_name, position, visible) VALUES (";
+  $sql .= "'" . $display_name . "', ";
+  $sql .= "'" . $position . "', ";
+  $sql .= "'" . $visible . "');";
+
+  $result = mysqli_query($db, $sql);
+
+  if ($result){
+    $id = mysqli_insert_id($db); // gets the ID of the record just created
+    redirect_to("show.php?id=" . $id . "&msg=Tag+Successfully+Created+with+ID+" . $id);
+  } else {
+    echo "Query Failed: " . $sql;
+    db_disconnect($db);
+    exit; 
+  }
+
+  mysqli_free_result($result);
 } 
 ?>
 
     <form action="new.php" method="post">
       <dl>
         <dt>Display Name</dt>
-        <dd><input type="text" name="menu_name" value="" /></dd>
+        <dd><input type="text" name="display_name" value="" /></dd>
       </dl>
       <dl>
         <dt>Position</dt>

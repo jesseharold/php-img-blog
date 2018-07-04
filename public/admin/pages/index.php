@@ -4,13 +4,7 @@
 
 
 <?php
-  // dummy data until db is set up
-  $pages = [
-    ['id' => '1', 'position' => '1', 'visible' => '1', 'menu_name' => 'About Globe Bank'],
-    ['id' => '2', 'position' => '2', 'visible' => '1', 'menu_name' => 'Consumer'],
-    ['id' => '3', 'position' => '3', 'visible' => '1', 'menu_name' => 'Small Business'],
-    ['id' => '4', 'position' => '4', 'visible' => '1', 'menu_name' => 'Commercial'],
-  ];
+  $result_set = get_all_pages();
 ?>
 
   
@@ -22,20 +16,31 @@
   	<table class="list">
   	  <tr>
         <th>ID</th>
-        <th>Position</th>
+        <th>Title</th>
         <th>Visible</th>
-  	    <th>Name</th>
+  	    <th>Content</th>
+  	    <th>Image</th>
+  	    <th>Tags</th>
+  	    <th>Published</th>
+        <th>Modified</th>
   	    <th>&nbsp;</th>
   	    <th>&nbsp;</th>
         <th>&nbsp;</th>
   	  </tr>
 
-      <?php foreach($pages as $page) { ?>
+      <?php while($page = mysqli_fetch_assoc($result_set)) { ?>
         <tr>
           <td><?php echo h($page['id']); ?></td>
-          <td><?php echo h($page['position']); ?></td>
+          <td><?php echo h(unquotes($page['title'])); ?></td>
           <td><?php echo $page['visible'] == 1 ? 'true' : 'false'; ?></td>
-    	    <td><?php echo h($page['menu_name']); ?></td>
+    	    <td><?php echo h(unquotes($page['content'])); ?></td>
+    	    <td><?php echo h($page['img_path']); ?></td>
+    	    <td><?php 
+                $all_tags = get_tags_from_id_string($page['tag_ids']);
+                echo implode(", ", $all_tags); 
+            ?></td>
+    	    <td><?php echo h($page['pubdate']); ?></td>
+    	    <td><?php echo h($page['moddate']); ?></td>
           <td><a class="action" href="/admin/pages/show.php?id=<?php echo h(u($page['id'])) ?>">View</a></td>
           <td><a class="action" href="/admin/pages/edit.php?id=<?php echo h(u($page['id'])) ?>">Edit</a></td>
           <td><a class="action" href="/admin/pages/delete.php?id=<?php echo h(u($page['id'])) ?>">Delete</a></td>
@@ -44,5 +49,10 @@
   	</table>
 
   </div>
+
+<?php 
+  // free up memory used by this query
+  mysqli_free_result($result_set);
+?>
 
 <?php include_once(SHARED_PATH . '/admin_footer.php'); ?>

@@ -4,9 +4,7 @@
 
 
 <?php
-
   $result_set = get_all_tags();
-
 ?>
 
   

@@ -70,3 +70,9 @@ table.list, table.list td, table.list th {
 footer{
 
 }
+
+.flash {
+    background-color: lightgray;
+    padding: 5px 3%;
+    font-style: italic;
+}
