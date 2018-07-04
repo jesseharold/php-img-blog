@@ -12,24 +12,26 @@ If the site grows, a mapping table will be necessary.
 http://www.joinfu.com/2005/12/managing-many-to-many-relationships-in-mysql-part-1/
 
 pages:
-+---------+--------------+------+-----+-------------------+----------------+
-| Field   | Type         | Null | Key | Default           | Extra          |
-+---------+--------------+------+-----+-------------------+----------------+
-| id      | int(11)      | NO   | PRI | NULL              | auto_increment |
-| title   | varchar(255) | YES  |     | NULL              |                |
-| visible | tinyint(1)   | YES  |     | NULL              |                |
-| content | mediumtext   | YES  |     | NULL              |                |
-| pubdate | datetime     | YES  |     | NULL              |                |
-| tag_ids | varchar(255) | YES  |     | NULL              |                |
-| moddate | datetime     | YES  |     | CURRENT_TIMESTAMP |                |
-+---------+--------------+------+-----+-------------------+----------------+
+
+        +---------+--------------+------+-----+-------------------+----------------+
+        | Field   | Type         | Null | Key | Default           | Extra          |
+        +---------+--------------+------+-----+-------------------+----------------+
+        | id      | int(11)      | NO   | PRI | NULL              | auto_increment |
+        | title   | varchar(255) | YES  |     | NULL              |                |
+        | visible | tinyint(1)   | YES  |     | NULL              |                |
+        | content | mediumtext   | YES  |     | NULL              |                |
+        | pubdate | datetime     | YES  |     | NULL              |                |
+        | tag_ids | varchar(255) | YES  |     | NULL              |                |
+        | moddate | datetime     | YES  |     | CURRENT_TIMESTAMP |                |
+        +---------+--------------+------+-----+-------------------+----------------+
 
 tags:
-+--------------+--------------+------+-----+---------+----------------+
-| Field        | Type         | Null | Key | Default | Extra          |
-+--------------+--------------+------+-----+---------+----------------+
-| id           | int(11)      | NO   | PRI | NULL    | auto_increment |
-| display_name | varchar(255) | YES  |     | NULL    |                |
-| position     | int(3)       | YES  |     | NULL    |                |
-| visible      | tinyint(1)   | YES  |     | NULL    |                |
-+--------------+--------------+------+-----+---------+----------------+
+
+        +--------------+--------------+------+-----+---------+----------------+
+        | Field        | Type         | Null | Key | Default | Extra          |
+        +--------------+--------------+------+-----+---------+----------------+
+        | id           | int(11)      | NO   | PRI | NULL    | auto_increment |
+        | display_name | varchar(255) | YES  |     | NULL    |                |
+        | position     | int(3)       | YES  |     | NULL    |                |
+        | visible      | tinyint(1)   | YES  |     | NULL    |                |
+        +--------------+--------------+------+-----+---------+----------------+
