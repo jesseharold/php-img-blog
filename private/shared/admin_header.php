@@ -23,4 +23,7 @@
     </navigation>
 
     <section id="content" class="container">
+    
+        <?php echo show_flash($_GET, 'msg'); ?>
+        
         <h2><?php echo h($page_title); ?></h2>

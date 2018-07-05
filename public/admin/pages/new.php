@@ -6,37 +6,19 @@
 
 // Handle form values sent by new.php
 if (is_post_request()){
-  $title = $_POST['title'] ? $_POST['title'] : '';
-  $visible = $_POST['visible'] ? $_POST['visible']: '';
-  $content = $_POST['content'] ? $_POST['content'] : '';
-  $img_path = $_POST['img_path'] ? $_POST['img_path'] : '';
-  $pubdate = $_POST['pubdate'] ? $_POST['pubdate']: '';
-  $tag_ids = $_POST['tag_ids'] ? $_POST['tag_ids'] : '';
+  $page = [];
+  $page['title'] = $_POST['title'] ? $_POST['title'] : '';
+  $page['visible'] = $_POST['visible'] ? $_POST['visible']: '';
+  $page['content'] = $_POST['content'] ? $_POST['content'] : '';
+  $page['img_path'] = $_POST['img_path'] ? $_POST['img_path'] : '';
+  $page['pubdate'] = $_POST['pubdate'] ? $_POST['pubdate']: '';
+  $page['tag_ids'] = $_POST['tag_ids'] ? $_POST['tag_ids'] : '';
   
-  if ($visible == ''){
-    $visible = 0;
+  $new_id = create_page($page);
+
+  if ($new_id){
+    redirect_to("show.php?id=" . $new_id . "&msg=Page+Successfully+Created+with+ID+" . $new_id);
   }
-
-  $sql = "INSERT INTO pages (title, visible, content, img_path, pubdate, tag_ids) VALUES (";
-  $sql .= "'" . quotes($title) . "', ";
-  $sql .= "'" . $visible . "', ";
-  $sql .= "'" . quotes($content) . "', ";
-  $sql .= "'" . $img_path . "', ";
-  $sql .= "'" . $pubdate . "', ";
-  $sql .= "'" . $tag_ids . "');";
-
-  $result = mysqli_query($db, $sql);
-
-  if ($result){
-    $id = mysqli_insert_id($db); // gets the ID of the record just created
-    redirect_to("show.php?id=" . $id . "&msg=Page+Successfully+Created+with+ID+" . $id);
-  } else {
-    echo "Query Failed: " . $sql;
-    db_disconnect($db);
-    exit; 
-  }
-
-  mysqli_free_result($result);
 } 
 ?>
 

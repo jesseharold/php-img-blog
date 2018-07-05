@@ -9,11 +9,9 @@
     } else {
         redirect_to('index.php');
     }
-    
+
     $tag = get_tag_by_id($id); 
 ?>
-
-<?php echo show_flash($_GET, 'msg'); ?>
 
 <dl>
     <dt>ID</dt>

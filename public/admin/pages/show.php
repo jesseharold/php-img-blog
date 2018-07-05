@@ -12,8 +12,6 @@
     $page = get_page_by_id($id);
 ?>
 
-<?php echo show_flash($_GET, 'msg'); ?>
-
     <dl>
         <dt>ID</dt>
         <dd><?php echo h($page['id']); ?></dd>

@@ -6,16 +6,14 @@
 
   if (is_post_request()){
     // send new data to db
-    $sql = "UPDATE tags SET ";
-    $sql .= "display_name='" . $_POST['display_name'] . "', ";
-    $sql .= "position='" . $_POST['position'] . "', ";
-    $sql .= "visible='" . $_POST['visible'] . "' ";
-    $sql .= "WHERE id='" . $_GET['id'] . "' LIMIT 1;";
+    $new_tag = [];
+    $new_tag["display_name"] = $_POST['display_name'];
+    $new_tag["position"] = $_POST['position'];
+    $new_tag["visible"] = $_POST['visible'];
+    $new_tag['id'] = $_GET['id'];
 
-    $result = mysqli_query($db, $sql);
-
-    if (result){
-      redirect_to("show.php?id=" . $_GET['id'] . "&msg=Tag+updated+successfully.");
+    if (update_tag($new_tag)){
+      redirect_to("show.php?id=" . $new_tag['id'] . "&msg=Tag+updated+successfully.");
     } else {
       echo "Query Failed: " . $sql;
       db_disconnect($db);
@@ -31,10 +29,13 @@
     }
   
     $tag = get_tag_by_id($id);
+
+    // get current number of tags for position
+    $all_tags = get_all_tags();
+    $tag_count = mysqli_num_rows($all_tags);
+    mysqli_free_result($all_tags);
   }
 ?>
-
-  <?php echo show_flash($_GET, 'msg'); ?>
 
     <form action="edit.php?id=<?php echo $id ?>" method="post">
       <dl>
@@ -45,12 +46,15 @@
         <dt>Position</dt>
         <dd>
           <select name="position">
-            <option value="1" <?php if($tag['position'] == "1"){ echo "SELECTED"; } ?>>1</option>
-            <option value="2" <?php if($tag['position'] == "2"){ echo "SELECTED"; } ?>>2</option>
-            <option value="3" <?php if($tag['position'] == "3"){ echo "SELECTED"; } ?>>3</option>
-            <option value="4" <?php if($tag['position'] == "4"){ echo "SELECTED"; } ?>>4</option>
-            <option value="5" <?php if($tag['position'] == "5"){ echo "SELECTED"; } ?>>5</option>
-            <option value="6" <?php if($tag['position'] == "6"){ echo "SELECTED"; } ?>>6</option>
+            <?php 
+              for ($i = 1; $i <= $tag_count; $i++){
+                echo '<option value="' . $i . '" ';
+                if ($tag['position'] == $i){
+                  echo "SELECTED"; 
+                }
+                echo '>' . $i . '</option>';
+              }
+            ?>
           </select>
         </dd>
       </dl>

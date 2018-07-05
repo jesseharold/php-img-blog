@@ -8,19 +8,17 @@
 
   if (is_post_request()){
     // send new data to db
-    $sql = "UPDATE pages SET ";
-    $sql .= "title='" . quotes($_POST['title']) . "', ";
-    $sql .= "content='" . quotes($_POST['content']) . "', ";
-    $sql .= "visible='" . $_POST['visible'] . "', ";
-    $sql .= "img_path='" . $_POST['img_path'] . "', ";
-    $sql .= "pubdate='" . $_POST['pubdate'] . "', ";
-    $sql .= "tag_ids='" . $_POST['tag_ids'] . "' ";
-    $sql .= "WHERE id='" . $_GET['id'] . "' LIMIT 1;";
+    $new_page = [];
+    $new_page["title"] = quotes($_POST['title']);
+    $new_page["content"] = quotes($_POST['content']);
+    $new_page["visible"] = $_POST['visible'];
+    $new_page["img_path"] = $_POST['img_path'];
+    $new_page["pubdate"] = $_POST['pubdate'];
+    $new_page["tag_ids"] = $_POST['tag_ids'];
+    $new_page['id'] = $_GET['id'];
 
-    $result = mysqli_query($db, $sql);
-
-    if (result){
-      redirect_to("show.php?id=" . $_GET['id'] . "&msg=Page+updated+successfully.");
+    if (update_page($new_page)){
+      redirect_to("show.php?id=" . $new_page['id'] . "&msg=Page+updated+successfully.");
     } else {
       echo "Query Failed: " . $sql;
       db_disconnect($db);

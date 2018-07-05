@@ -6,31 +6,21 @@
 
 // Handle form values sent by new.php
 if (is_post_request()){
-  $display_name = $_POST['display_name'] ? $_POST['display_name'] : '';
-  $position = $_POST['position'] ? $_POST['position'] : '';
-  $visible = $_POST['visible'] ? $_POST['visible']: '';
+  $tag = [];
+  $tag['display_name'] = $_POST['display_name'] ? $_POST['display_name'] : '';
+  $tag['position'] = $_POST['position'] ? $_POST['position'] : '';
+  $tag['visible'] = $_POST['visible'] ? $_POST['visible']: '';
   
-  if ($visible == ''){
-    $visible = 0;
+  $new_id = create_tag($tag);
+
+  if ($new_id){
+    redirect_to("show.php?id=" . $new_id . "&msg=Tag+Successfully+Created+with+ID+" . $new_id);
   }
-
-  $sql = "INSERT INTO tags (display_name, position, visible) VALUES (";
-  $sql .= "'" . $display_name . "', ";
-  $sql .= "'" . $position . "', ";
-  $sql .= "'" . $visible . "');";
-
-  $result = mysqli_query($db, $sql);
-
-  if ($result){
-    $id = mysqli_insert_id($db); // gets the ID of the record just created
-    redirect_to("show.php?id=" . $id . "&msg=Tag+Successfully+Created+with+ID+" . $id);
-  } else {
-    echo "Query Failed: " . $sql;
-    db_disconnect($db);
-    exit; 
-  }
-
-  mysqli_free_result($result);
+} else {
+  // get current number of tags for position
+  $all_tags = get_all_tags();
+  $tag_count = mysqli_num_rows($all_tags) +1;
+  mysqli_free_result($all_tags);
 } 
 ?>
 
@@ -43,7 +33,15 @@ if (is_post_request()){
         <dt>Position</dt>
         <dd>
           <select name="position">
-            <option value="1">1</option>
+          <?php 
+              for ($i = 1; $i <= $tag_count; $i++){
+                echo '<option value="' . $i . '" ';
+                if ($tag_count == $i){
+                  echo "SELECTED"; 
+                }
+                echo '>' . $i . '</option>';
+              }
+            ?>
           </select>
         </dd>
       </dl>
