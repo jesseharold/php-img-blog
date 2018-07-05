@@ -108,9 +108,9 @@
             $tag_ids = explode(",", $page['tag_ids']);
             $new_tags = "";
 
-            for ($i = 0; $i < count($tag_ids); $i++){
-                if($tag_ids[$i] != $id){
-                    $new_tags .= $tag_ids[$i] . ",";
+            for ($j = 0; $j < count($tag_ids); $j++){
+                if($tag_ids[$j] != $id){
+                    $new_tags .= $tag_ids[$j] . ",";
                 }
             }
             $page['tag_ids'] = chop($new_tags, ",");
