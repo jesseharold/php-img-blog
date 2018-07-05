@@ -4,18 +4,18 @@
 
 <?php
 
+  if (isset($_GET['id'])){
+    $id = $_GET['id'];
+  }
+
   if (is_post_request()){
     // send new data to db
-    $done = delete_tag($_GET['id']);
+    $done = delete_tag($id);
     if (done){
         redirect_to("index.php?msg=Tag+deleted+successfully.");
     }
   } else {
     // show page
-    if (isset($_GET['id'])){
-      $id = $_GET['id'];
-    }
-  
     $tag = get_tag_by_id($id);
   }
 ?>
@@ -35,6 +35,12 @@
         <dt>Visible</dt>
         <dd>
             <?php if($tag['visible'] == "1"){ echo "true"; } else { echo "false"; } ?>
+        </dd>
+      </dl>
+      <dl>
+        <dt>Used by</dt>
+        <dd>
+            <?php echo count(get_pages_by_tag($id)) ?> pages
         </dd>
       </dl>
       <div id="operations">

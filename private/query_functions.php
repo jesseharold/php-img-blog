@@ -35,12 +35,12 @@
     }
 
     function get_tags_from_id_string($string){
-        $chars = str_split($string);
-        $result = array();
+        $tags = explode(",", $string);
+        $result = [];
 
-        foreach ($chars as $char) {
-            $tag = get_tag_by_id($char);
-            array_push($result, $tag['display_name']);
+        foreach ($tags as $tag) {
+            $tag_name = get_tag_by_id($tag);
+            array_push($result, $tag_name['display_name']);
         }
 
         return $result;
@@ -102,6 +102,21 @@
 
         $result = mysqli_query($db, $sql);
 
+        $tagged_pages = get_pages_by_tag($id);
+        for($i = 0; $i < count($tagged_pages); $i++){
+            $page = $tagged_pages[$i];
+            $tag_ids = explode(",", $page['tag_ids']);
+            $new_tags = "";
+
+            for ($i = 0; $i < count($tag_ids); $i++){
+                if($tag_ids[$i] != $id){
+                    $new_tags .= $tag_ids[$i] . ",";
+                }
+            }
+            $page['tag_ids'] = chop($new_tags, ",");
+            update_page($page);
+        }
+
         if (result){
             return true;
         } else {
@@ -126,6 +141,19 @@
         }
 
         return $result;
+    }
+
+    function get_pages_by_tag($tag_id){
+        $check_pages = get_all_pages();
+        $tagged_pages = [];
+        while($page = mysqli_fetch_assoc($check_pages)) {
+            $tag_ids = explode(",", $page['tag_ids']);
+            if (in_array($tag_id, $tag_ids)){
+                array_push($tagged_pages, $page);
+            }
+        }
+
+        return $tagged_pages;
     }
 
     function get_page_by_id($id){

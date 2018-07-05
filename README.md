@@ -37,12 +37,15 @@ tags:
         +--------------+--------------+------+-----+---------+----------------+
 
 To Do:
- - make tag_ids comma separated so it can me more than one digit
+ - add validation to new and edit pages
+
  - make edit and new page show checkboxes and tag names, not just numbers
  - ability to drag tags to change position?
  - a way to have tags get their positions auto-sorted so tehy're all unique?
- - when tag is deleted, remove it from all pages
-
+ 
  - file upload, add path to img_path field
  - auto resize images to a particular size(s) thats configurable
+ 
  - figure out how to stop h function from replacing quotes and apos - double encoding ampersands?
+
+ - add public display pages
