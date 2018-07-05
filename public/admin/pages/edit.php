@@ -14,7 +14,7 @@
     $new_page["visible"] = $_POST['visible'];
     $new_page["img_path"] = $_POST['img_path'];
     $new_page["pubdate"] = $_POST['pubdate'];
-    $new_page["tag_ids"] = $_POST['tag_ids'];
+    $new_page["tag_ids"] = join(",", $_POST['tag_ids']);
     $new_page['id'] = $_GET['id'];
 
     if (update_page($new_page)){
@@ -65,7 +65,21 @@
       </dl>
       <dl>
         <dt>Tags</dt>
-        <dd><input type="text" name="tag_ids" value="<?php echo $page['tag_ids']; ?>" /></dd>
+        <dd>
+          <select multiple name="tag_ids[]" size="10">
+          <?php
+            $all_tags = get_all_tags();
+            while($tag = mysqli_fetch_assoc($all_tags)){
+              echo '<option ';
+              echo ' value="' . $tag['id'] . '" ';
+              if (in_array($tag['id'], explode(',', $page['tag_ids']))){
+                echo 'SELECTED';
+              }
+              echo '>' . $tag['display_name'] . '</div>';
+            } 
+          ?>
+          </select>
+        </dd>
       </dl>
       <div id="operations">
         <input type="submit" class="action" value="Save Changes" />

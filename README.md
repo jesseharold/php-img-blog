@@ -37,9 +37,6 @@ tags:
         +--------------+--------------+------+-----+---------+----------------+
 
 To Do:
- - add validation to new and edit pages
-
- - make edit and new page show checkboxes and tag names, not just numbers
  - ability to drag tags to change position?
  - a way to have tags get their positions auto-sorted so tehy're all unique?
  
