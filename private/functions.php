@@ -39,6 +39,14 @@
         }
     }
 
+    function show_errors($errors){
+        // show flash messaging
+        for($i = 0; $i < count($errors); $i++) {
+            echo '<div class="flash">' . $errors[$i] . '</div>';
+        }
+    }
+
+
     function quotes($str){
         $clean = str_replace("'", "&apos;", $str);
         $clean = str_replace('"', "&quot;", $clean);

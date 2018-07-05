@@ -40,7 +40,7 @@
 
         foreach ($tags as $tag) {
             $tag_name = get_tag_by_id($tag);
-            array_push($result, $tag_name['display_name']);
+            $result[] = $tag_name['display_name'];
         }
 
         return $result;
@@ -51,6 +51,11 @@
 
         if ($tag['visible'] == ''){
             $tag['visible'] = 0;
+        }
+    
+        $errors = validate_tag($tag);
+        if (!empty($errors)){
+            return($errors);
         }
     
         $sql = "INSERT INTO tags (display_name, position, visible) VALUES (";
@@ -77,6 +82,11 @@
             $tag['visible'] = 0;
         }
     
+        $errors = validate_tag($tag);
+        if (!empty($errors)){
+            return($errors);
+        }
+
         $sql = "UPDATE tags SET ";
         $sql .= "display_name='" . $tag['display_name'] . "', ";
         $sql .= "position='" . $tag['position'] . "', ";
@@ -102,6 +112,40 @@
 
         $result = mysqli_query($db, $sql);
 
+        remove_tag_from_pages($id);
+
+        if (result){
+            return true;
+        } else {
+            echo "Query Failed: " . $sql;
+            db_disconnect($db);
+            exit; 
+        }
+    }
+
+    function validate_tag($tag){
+        $errors = [];
+
+        if (has_length_less_than($tag['display_name'], 2)){
+            $errors[] = "Display name has to be at least 2 characters.";
+        }
+        
+        if (has_length_greater_than($tag['display_name'], 100)){
+            $errors[] = "Display name has to be fewer than 100 characters.";
+        }
+
+        if (!has_inclusion_of($tag['visible'], ["0", "1"])){
+            $errors[] = "Visible must be either 0 or 1";
+        }
+
+        if ($tag['position'] < 1 || $tag['position'] > 999){
+            $errors[] = "Position must be between 1 and 999";
+        }
+        
+        return $errors;
+    }
+
+    function remove_tag_from_pages($id){
         $tagged_pages = get_pages_by_tag($id);
         for($i = 0; $i < count($tagged_pages); $i++){
             $page = $tagged_pages[$i];
@@ -115,14 +159,6 @@
             }
             $page['tag_ids'] = chop($new_tags, ",");
             update_page($page);
-        }
-
-        if (result){
-            return true;
-        } else {
-            echo "Query Failed: " . $sql;
-            db_disconnect($db);
-            exit; 
         }
     }
 
@@ -149,7 +185,7 @@
         while($page = mysqli_fetch_assoc($check_pages)) {
             $tag_ids = explode(",", $page['tag_ids']);
             if (in_array($tag_id, $tag_ids)){
-                array_push($tagged_pages, $page);
+                $tagged_pages[] = $page;
             }
         }
 
@@ -180,6 +216,11 @@
             $page['visible'] = 0;
         }
 
+        $errors = validate_page($page);
+        if (!empty($errors)){
+            return($errors);
+        }
+
         $sql = "INSERT INTO pages (title, visible, content, img_path, pubdate, tag_ids) VALUES (";
         $sql .= "'" . quotes($page['title']) . "', ";
         $sql .= "'" . $page['visible'] . "', ";
@@ -204,6 +245,11 @@
                 
         if ($page['visible'] == ''){
             $page['visible'] = 0;
+        }
+
+        $errors = validate_page($page);
+        if (!empty($errors)){
+            return($errors);
         }
 
         $sql = "UPDATE pages SET ";
@@ -241,6 +287,43 @@
             db_disconnect($db);
             exit; 
         }
+    }
+
+    function validate_page($page){
+        $errors = [];
+
+        if (has_length_less_than($page['title'], 2)){
+            $errors[] = "Title has to be at least 2 characters.";
+        }
+        
+        if (!has_inclusion_of($page['visible'], ["0", "1"])){
+            $errors[] = "Visible must be either 0 or 1";
+        }
+
+        if (!validate_datetime($page['pubdate'])){
+            $errors[] = "Publish date must be a valid date in the format Y-m-d h:i:s";
+        }
+
+        $tags = explode(",", $page['tag_ids']);
+        if ($tags){
+            $valid = true;
+            for($i = 0; $i < count($tags); $i++){
+                if(!is_numeric($tags[$i]) || 
+                    (int)$tags[$i] > 999 ||  
+                    (int)$tags[$i] < 1){
+                    $valid = false;
+                }
+            }
+            if(!$valid){
+                $errors[] = "Tags must be stored as comma separated ids.";
+            }
+        }
+        
+        return $errors;   
+    }
+
+    function validate_datetime($str){
+        return (DateTime::createFromFormat('Y-m-d h:i:s', $str) !== false);
     }
 
 ?>
