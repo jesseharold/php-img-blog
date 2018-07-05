@@ -6,7 +6,7 @@
         global $db;    
 
         $query = "SELECT * FROM tags ";
-        $query .= "ORDER BY position ASC";
+        $query .= "ORDER BY position ASC, display_name";
         $result = mysqli_query($db, $query);
 
         // Test if query succeeded
@@ -66,6 +66,7 @@
         $result = mysqli_query($db, $sql);
     
         if ($result){
+            reposition_tags();
             return mysqli_insert_id($db); // gets the ID of the record just created
         } else {
             echo "Query Failed: " . $sql;
@@ -96,6 +97,7 @@
         $result = mysqli_query($db, $sql);
     
         if ($result){
+            reposition_tags();
             return true;
         } else {
             echo "Query Failed: " . $sql;
@@ -115,6 +117,7 @@
         remove_tag_from_pages($id);
 
         if (result){
+            reposition_tags();
             return true;
         } else {
             echo "Query Failed: " . $sql;
@@ -159,6 +162,19 @@
             }
             $page['tag_ids'] = chop($new_tags, ",");
             update_page($page);
+        }
+    }
+
+    function reposition_tags(){
+        $all_tags = get_all_tags();
+        $counter = 1;
+        while($tag = mysqli_fetch_assoc($all_tags)){
+            if($tag['position'] != $counter){
+                $tag['position'] = $counter;
+                update_tag($tag);
+            }
+            
+            $counter++;
         }
     }
 
