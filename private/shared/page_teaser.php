@@ -12,7 +12,7 @@
         <p><?php echo h(substr($page['content'], 0, 140)); ?></p>
         <img src="<?php echo h($page['img_path']); ?>">
 
-        <?php include(SHARED_PATH . '/list_tags.php');?>
+        <?php include(SHARED_PATH . '/list_tags.php'); ?>
         
     </div>
 <?php } ?>

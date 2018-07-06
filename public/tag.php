@@ -6,6 +6,7 @@
     } else {
         redirect_to('index.php');
     }
+
     $tag = get_tag_by_id($id);
 
     if($tag['visible']){ 

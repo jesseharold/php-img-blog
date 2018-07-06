@@ -1,12 +1,13 @@
 <div class="list-tags">
     <?php 
         $all_tags = get_tags_from_id_string($page['tag_ids']);
-        $tag_ids = explode(',', $page['tag_ids']);
-        for($i = 0; $i < count($all_tags); $i++){
+        $all_tags_ids = explode(',', $page['tag_ids']);
+
+        for($j = 0; $j < count($all_tags); $j++){
             echo '<a href="tag.php?id=' 
-            . $tag_ids[$i] . 
+            . h($all_tags_ids[$j]) . 
             '" class="one-tag">' 
-            . $all_tags[$i] . '</a>';
+            . h($all_tags[$j]) . '</a>';
         } 
     ?>
 </div>
