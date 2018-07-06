@@ -45,17 +45,4 @@
             echo '<div class="flash">' . $errors[$i] . '</div>';
         }
     }
-
-
-    function quotes($str){
-        $clean = str_replace("'", "&apos;", $str);
-        $clean = str_replace('"', "&quot;", $clean);
-        return $clean;
-    }
-
-    function unquotes($str){
-        $quoted = str_replace("&apos;", "'", $str);
-        $clean = str_replace("&quot;", '"', $quoted);
-        return $quoted;
-    }
 ?>

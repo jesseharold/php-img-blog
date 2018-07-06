@@ -36,13 +36,17 @@ tags:
         | visible      | tinyint(1)   | YES  |     | NULL    |                |
         +--------------+--------------+------+-----+---------+----------------+
 
-To Do:
- - ability to drag tags to change position?
- - a way to have tags get their positions auto-sorted so tehy're all unique?
+BUGS:
+ - fix bug with tag positions not getting saved properly
+ - after create new tag, not redirecting
+ - page edit not working
  
+ MUST HAVE:
  - file upload, add path to img_path field
- - auto resize images to a particular size(s) thats configurable
- 
- - figure out how to stop h function from replacing quotes and apos - double encoding ampersands?
 
  - add public display pages
+ 
+ NICE TO HAVE:
+ - auto resize images to a particular size(s) thats configurable
+ - ability to drag tags to change position?
+ - add calendar widget to select pub date 

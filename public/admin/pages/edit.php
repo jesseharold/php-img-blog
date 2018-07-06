@@ -9,8 +9,8 @@
   if (is_post_request()){
     // send new data to db
     $new_page = [];
-    $new_page["title"] = quotes($_POST['title']);
-    $new_page["content"] = quotes($_POST['content']);
+    $new_page["title"] = $_POST['title'];
+    $new_page["content"] = $_POST['content'];
     $new_page["visible"] = $_POST['visible'];
     $new_page["img_path"] = $_POST['img_path'];
     $new_page["pubdate"] = $_POST['pubdate'];
@@ -37,7 +37,7 @@
 
 ?>
 
-    <form action="edit.php?id=<?php echo $id ?>" method="post">
+    <form action="edit.php?id=<?php echo $id ?>" method="post"  enctype="multipart/form-data">
       <dl>
         <dt>Title</dt>
         <dd><input type="text" name="title" value="<?php echo h($page['title']); ?>" /></dd>
@@ -57,7 +57,9 @@
       </dl>
       <dl>
         <dt>Image</dt>
-        <dd><input type="text" name="img_path" value="<?php echo $page['img_path']; ?>" /></dd>
+        <dd>
+          <input type="file" name="img_path" value="<?php echo $page['img_path']; ?>" />
+        </dd>
       </dl>
       <dl>
         <dt>Publication Date</dt>

@@ -26,7 +26,7 @@ if (is_post_request()){
 } 
 ?>
     <?php show_errors($errors); ?>
-    <form action="new.php" method="post">
+    <form action="new.php" method="post" enctype="multipart/form-data">
       <dl>
         <dt>Title</dt>
         <dd><input type="text" name="title" value="<?php echo h($page['title']) ?>" /></dd>
@@ -46,7 +46,9 @@ if (is_post_request()){
       </dl>
       <dl>
         <dt>Image</dt>
-        <dd><input type="text" name="img_path" value="<?php echo $page['img_path'] ?>" /></dd>
+        <dd>
+          <input type="file" name="img_path" value="<?php echo $page['img_path'] ?>" />
+        </dd>
       </dl>
       <dl>
         <dt>Publication Date</dt>

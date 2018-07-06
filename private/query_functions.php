@@ -21,7 +21,7 @@
         global $db;    
 
         $query = "SELECT * FROM tags ";
-        $query .= "WHERE id = '" . $id . "'";
+        $query .= "WHERE id = '" . db_escape($db, $id) . "'";
         $result = mysqli_query($db, $query);
 
         // Test if query succeeded
@@ -59,9 +59,9 @@
         }
     
         $sql = "INSERT INTO tags (display_name, position, visible) VALUES (";
-        $sql .= "'" . $tag['display_name'] . "', ";
-        $sql .= "'" . $tag['position'] . "', ";
-        $sql .= "'" . $tag['visible'] . "');";
+        $sql .= "'" . db_escape($db, $tag['display_name']) . "', ";
+        $sql .= "'" . db_escape($db, $tag['position']) . "', ";
+        $sql .= "'" . db_escape($db, $tag['visible']) . "');";
     
         $result = mysqli_query($db, $sql);
     
@@ -89,10 +89,10 @@
         }
 
         $sql = "UPDATE tags SET ";
-        $sql .= "display_name='" . $tag['display_name'] . "', ";
-        $sql .= "position='" . $tag['position'] . "', ";
-        $sql .= "visible='" . $tag['visible'] . "' ";
-        $sql .= "WHERE id='" . $tag['id'] . "' LIMIT 1;";
+        $sql .= "display_name='" . db_escape($db, $tag['display_name']) . "', ";
+        $sql .= "position='" . db_escape($db, $tag['position']) . "', ";
+        $sql .= "visible='" . db_escape($db, $tag['visible']) . "' ";
+        $sql .= "WHERE id='" . db_escape($db, $tag['id']) . "' LIMIT 1;";
     
         $result = mysqli_query($db, $sql);
     
@@ -110,7 +110,7 @@
         global $db; 
 
         $sql = "DELETE FROM tags ";
-        $sql .= "WHERE id='" . $id . "' LIMIT 1;";
+        $sql .= "WHERE id='" . db_escape($db, $id) . "' LIMIT 1;";
 
         $result = mysqli_query($db, $sql);
 
@@ -124,28 +124,6 @@
             db_disconnect($db);
             exit; 
         }
-    }
-
-    function validate_tag($tag){
-        $errors = [];
-
-        if (has_length_less_than($tag['display_name'], 2)){
-            $errors[] = "Display name has to be at least 2 characters.";
-        }
-        
-        if (has_length_greater_than($tag['display_name'], 100)){
-            $errors[] = "Display name has to be fewer than 100 characters.";
-        }
-
-        if (!has_inclusion_of($tag['visible'], ["0", "1"])){
-            $errors[] = "Visible must be either 0 or 1";
-        }
-
-        if ($tag['position'] < 1 || $tag['position'] > 999){
-            $errors[] = "Position must be between 1 and 999";
-        }
-        
-        return $errors;
     }
 
     function remove_tag_from_pages($id){
@@ -212,7 +190,7 @@
         global $db;    
 
         $query = "SELECT * FROM pages ";
-        $query .= "WHERE id = '" . $id . "'";
+        $query .= "WHERE id = '" . db_escape($db, $id) . "'";
         $result = mysqli_query($db, $query);
 
         // Test if query succeeded
@@ -238,12 +216,12 @@
         }
 
         $sql = "INSERT INTO pages (title, visible, content, img_path, pubdate, tag_ids) VALUES (";
-        $sql .= "'" . quotes($page['title']) . "', ";
-        $sql .= "'" . $page['visible'] . "', ";
-        $sql .= "'" . quotes($page['content']) . "', ";
-        $sql .= "'" . $page['img_path'] . "', ";
-        $sql .= "'" . $page['pubdate'] . "', ";
-        $sql .= "'" . $page['tag_ids'] . "');";
+        $sql .= "'" . db_escape($db, $page['title']) . "', ";
+        $sql .= "'" . db_escape($db, $page['visible']) . "', ";
+        $sql .= "'" . db_escape($db, $page['content']) . "', ";
+        $sql .= "'" . db_escape($db, $page['img_path']) . "', ";
+        $sql .= "'" . db_escape($db, $page['pubdate']) . "', ";
+        $sql .= "'" . db_escape($db, $page['tag_ids']) . "');";
 
         $result = mysqli_query($db, $sql);
 
@@ -269,13 +247,13 @@
         }
 
         $sql = "UPDATE pages SET ";
-        $sql .= "title='" . quotes($page['title']) . "', ";
-        $sql .= "visible='" . $page['visible'] . "', ";
-        $sql .= "content='" . quotes($page['content']) . "', ";
-        $sql .= "img_path='" . $page['img_path'] . "', ";
-        $sql .= "pubdate='" . $page['pubdate'] . "', ";
-        $sql .= "tag_ids='" . $page['tag_ids'] . "' ";
-        $sql .= "WHERE id= '" . $page['id'] . "' LIMIT 1;";
+        $sql .= "title='" . db_escape($db, $page['title']) . "', ";
+        $sql .= "visible='" . db_escape($db, $page['visible']) . "', ";
+        $sql .= "content='" . db_escape($db, $page['content']) . "', ";
+        $sql .= "img_path='" . db_escape($db, $page['img_path']) . "', ";
+        $sql .= "pubdate='" . db_escape($db, $page['pubdate']) . "', ";
+        $sql .= "tag_ids='" . db_escape($db, $page['tag_ids']) . "' ";
+        $sql .= "WHERE id= '" . db_escape($db, $page['id']) . "' LIMIT 1;";
 
         $result = mysqli_query($db, $sql);
 
@@ -292,7 +270,7 @@
         global $db; 
 
         $sql = "DELETE FROM pages ";
-        $sql .= "WHERE id='" . $id . "' LIMIT 1;";
+        $sql .= "WHERE id='" . db_escape($db, $id) . "' LIMIT 1;";
 
         $result = mysqli_query($db, $sql);
 
@@ -303,43 +281,6 @@
             db_disconnect($db);
             exit; 
         }
-    }
-
-    function validate_page($page){
-        $errors = [];
-
-        if (has_length_less_than($page['title'], 2)){
-            $errors[] = "Title has to be at least 2 characters.";
-        }
-        
-        if (!has_inclusion_of($page['visible'], ["0", "1"])){
-            $errors[] = "Visible must be either 0 or 1";
-        }
-
-        if (!validate_datetime($page['pubdate'])){
-            $errors[] = "Publish date must be a valid date in the format Y-m-d h:i:s";
-        }
-
-        $tags = explode(",", $page['tag_ids']);
-        if ($tags){
-            $valid = true;
-            for($i = 0; $i < count($tags); $i++){
-                if(!is_numeric($tags[$i]) || 
-                    (int)$tags[$i] > 999 ||  
-                    (int)$tags[$i] < 1){
-                    $valid = false;
-                }
-            }
-            if(!$valid){
-                $errors[] = "Tags must be stored as comma separated ids.";
-            }
-        }
-        
-        return $errors;   
-    }
-
-    function validate_datetime($str){
-        return (DateTime::createFromFormat('Y-m-d h:i:s', $str) !== false);
     }
 
 ?>
