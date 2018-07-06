@@ -1,5 +1,11 @@
 
-<?php if(!isset($page_title)){ $page_title = ""; } ?>
+<?php 
+    if(!isset($page_title)){ 
+        $page_title = ""; 
+    }
+    
+    $nav_tags = get_all_tags();
+?>
 
 <!doctype html>
 <html lang="en">
@@ -16,7 +22,15 @@
 
     <navigation class="container">
         <ul>
-
+        <?php while($tag = mysqli_fetch_assoc($nav_tags)) { ?>
+            <?php if($tag['visible']){ ?>
+                <li>
+                    <a href="tag.php?id=<?php echo h(u($tag['id']))?>">
+                        <?php echo h($tag['display_name']); ?>
+                    </a>
+                </li>
+            <?php } ?>
+        <?php } ?>
         </ul>
     </navigation>
 

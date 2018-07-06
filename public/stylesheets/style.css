@@ -89,7 +89,14 @@ footer{
 }
 
 .one-post-teaser {
-    margin: 10% 2%;
+    background-color: #fff;
+    margin: 6% 2%;
+    padding: 5% 4% 8%;
+}
+
+.one-post-teaser h4 {
+    padding: 0;
+    margin: 0 0 20px;
 }
 
 .one-post-teaser p {
