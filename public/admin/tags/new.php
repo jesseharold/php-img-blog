@@ -17,13 +17,13 @@ mysqli_free_result($all_tags);
 
 // Handle form values sent by new.php
 if (is_post_request()){
-  
   $new_id = create_tag($tag);
 
   if (is_array($new_id)){
     $errors = $new_id;
-  } elseif ($new_id){
-    redirect_to("show.php?id=" . $new_id . "&msg=Tag+Successfully+Created+with+ID+" . $new_id);
+
+  } else {
+    redirect_to("show.php?id=" . $new_id . "&msg=Tag+successfully+created+with+ID+" . $new_id);
   }
 }
 ?>

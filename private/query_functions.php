@@ -66,8 +66,9 @@
         $result = mysqli_query($db, $sql);
     
         if ($result){
+            $new_id = mysqli_insert_id($db); // gets the ID of the record just created
             reposition_tags();
-            return mysqli_insert_id($db); // gets the ID of the record just created
+            return $new_id; 
         } else {
             echo "Query Failed: " . $sql;
             db_disconnect($db);

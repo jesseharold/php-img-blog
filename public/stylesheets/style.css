@@ -87,3 +87,43 @@ footer{
     display: inline-block;
     margin: 10px;
 }
+
+.one-post-teaser {
+    margin: 10% 2%;
+}
+
+.one-post-teaser p {
+    padding: 0 4%;
+}
+
+.metadata {
+    font-size: .8em;
+    color: #666;
+    font-style: italic;
+    margin-top: -15px;
+}
+
+.list-tags{
+    padding: 0 4%;
+}
+
+.list-tags .one-tag {
+    padding: 5px;
+    margin: 4px;
+    border: 1px solid #b5b5b5;
+    background-color: #e8e8e8;
+    color: #666;
+    border-radius: 4px;
+    font-size: .8em;
+    font-style: italic;
+    text-decoration: none;
+}
+
+.list-tags .one-tag:hover {
+    color: #59b300;
+    border-color: chartreuse;
+}
+
+.page-full-content {
+    margin: 4%;
+}

@@ -10,8 +10,11 @@
         </div>
 
         <p><?php echo h(substr($page['content'], 0, 140)); ?></p>
-        <img src="<?php echo h($page['img_path']); ?>">
 
+        <?php if($page['img_path']){ ?>
+            <img class="post-thumb" src="<?php echo h($page['img_path']); ?>">
+        <?php } ?>
+        
         <?php include(SHARED_PATH . '/list_tags.php'); ?>
         
     </div>

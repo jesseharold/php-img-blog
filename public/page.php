@@ -19,7 +19,7 @@
             <?php echo h($page['pubdate']); ?>
         </div>
 
-        <p><?php echo h($page['content']); ?></p>
+        <p class="page-full-content"><?php echo h($page['content']); ?></p>
         <img src="<?php echo h($page['img_path']); ?>">
 
         <?php include(SHARED_PATH . '/list_tags.php');?>
