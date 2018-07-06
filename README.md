@@ -39,12 +39,11 @@ tags:
 BUGS:
  - fix bug with tag positions not getting saved properly
  - after create new tag, not redirecting
- - page edit not working
+ - page edit not working - test w/o quotes
  
  MUST HAVE:
  - file upload, add path to img_path field
-
- - add public display pages
+ - add styles for public display pages
  
  NICE TO HAVE:
  - auto resize images to a particular size(s) thats configurable
