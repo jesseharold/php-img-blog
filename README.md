@@ -37,13 +37,13 @@ tags:
         +--------------+--------------+------+-----+---------+----------------+
 
 BUGS:
- - tag positions not getting saved properly
  - mod date not auto-updating
  
  MUST HAVE:
  - file upload, add path to img_path field
  
  NICE TO HAVE:
+ - reposition tags function needs to be debugged
  - auto resize images to a particular size(s) thats configurable
  - ability to drag tags to change position?
  - add calendar widget to select pub date 

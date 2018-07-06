@@ -81,7 +81,7 @@
         global $db;
 
         if ($tag['visible'] == ''){
-            $tag['visible'] = 0;
+            $tag['visible'] = '0';
         }
     
         $errors = validate_tag($tag);
@@ -98,7 +98,7 @@
         $result = mysqli_query($db, $sql);
     
         if ($result){
-            reposition_tags();
+            //reposition_tags();
             return true;
         } else {
             echo "Query Failed: " . $sql;
