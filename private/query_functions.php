@@ -163,7 +163,7 @@
         global $db;    
 
         $query = "SELECT * FROM pages ";
-        $query .= "ORDER BY pubdate ASC";
+        $query .= "ORDER BY pubdate DESC";
         $result = mysqli_query($db, $query);
 
         // Test if query succeeded
@@ -239,7 +239,7 @@
         global $db;
                 
         if ($page['visible'] == ''){
-            $page['visible'] = 0;
+            $page['visible'] = '0';
         }
 
         $errors = validate_page($page);

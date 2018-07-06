@@ -61,12 +61,14 @@ if (is_post_request()){
           <?php
             $all_tags = get_all_tags();
             while($tag = mysqli_fetch_assoc($all_tags)){
-              echo '<option ';
-              echo ' value="' . $tag['id'] . '" ';
-              if (in_array($tag['id'], explode(',', $page['tag_ids']))){
-                echo 'SELECTED';
+              if ($tag['visible']){
+                echo '<option ';
+                echo ' value="' . $tag['id'] . '" ';
+                if (in_array($tag['id'], explode(',', $page['tag_ids']))){
+                  echo 'SELECTED';
+                }
+                echo '>' . $tag['display_name'] . '</div>';
               }
-              echo '>' . $tag['display_name'] . '</div>';
             } 
           ?>
           </select>

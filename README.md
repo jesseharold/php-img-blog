@@ -38,7 +38,7 @@ tags:
 
 BUGS:
  - tag positions not getting saved properly
- - page edit not working - test w/o quotes
+ - mod date not auto-updating
  
  MUST HAVE:
  - file upload, add path to img_path field

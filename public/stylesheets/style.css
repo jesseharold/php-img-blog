@@ -19,7 +19,7 @@ body {
 }
 
 header, footer {
-    background-color: #bde68c;
+    background-color: #67c3bf;
     padding: 10px;
     text-align: center;
 }
@@ -43,7 +43,7 @@ navigation {
 }
 
 navigation ul {
-    background-color: chartreuse;
+    background-color: #673a4a;
     list-style: none;
     display: flex;
     justify-content: center;
@@ -54,12 +54,12 @@ navigation ul li {
 }
 
 navigation ul li a {
-    color: #1d3d40;
+    color: #a0dca5;
     text-decoration: none;
 }
 
 navigation ul li a:hover {
-    color: #000;
+    color: #80f78a;
     text-decoration: underline;
 }
 
@@ -94,7 +94,17 @@ footer{
     padding: 5% 4% 8%;
 }
 
+.one-post-teaser a {
+    color: #5cbf9e;
+}
+
+.one-post-teaser a:hover,
+.one-post-teaser a:hover h4 {
+    color: #0af1a4;
+}
+
 .one-post-teaser h4 {
+    color: #5cbf9e;
     padding: 0;
     margin: 0 0 20px;
 }
@@ -120,17 +130,20 @@ footer{
     border: 1px solid #b5b5b5;
     background-color: #e8e8e8;
     color: #666;
-    border-radius: 4px;
-    font-size: .8em;
+    border-radius: 8px;
+    font-size: .7em;
     font-style: italic;
     text-decoration: none;
 }
 
 .list-tags .one-tag:hover {
-    color: #59b300;
-    border-color: chartreuse;
+    color: #0af1a4;
+    border-color: #0af1a4;
+    background-color: #1d3d40;
 }
 
 .page-full-content {
     margin: 4%;
+    padding: 4%;
+    background-color: #fff;
 }
